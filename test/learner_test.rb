@@ -22,7 +22,7 @@ class LearnerTest < Test::Unit::TestCase
       assert_equal(File.join(File.expand_path("..",__FILE__),'docs'),
                    List.new.pwd('test/docs') )
     end
-    test "dir_globはtest/docsのfileを返す" do
+    test "dir_globはtest/docsのfileのArrayを返す" do
       dir = File.join(File.expand_path("..",__FILE__),'docs','*')
       assert_equal  Dir.glob(dir) ,List.new.dir_glob('test/docs')
     end
