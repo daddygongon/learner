@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+module Learner
+  # puts hello
+  class List
+    def pwd(target_dir='docs')
+      target = File.join(File.expand_path("../../..", __FILE__), target_dir)
+    end
+    def ls(target_dir='docs')
+      target = File.join(File.expand_path("../../..", __FILE__), target_dir)
+      dir.glob(File.join(target, '*'))
+    end
+  end
+end
