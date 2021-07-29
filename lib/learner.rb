@@ -16,7 +16,7 @@ module Learner
     end
 
     desc "ls [NAME]", "list NAME"
-    def ls(name = "test/docs")
+    def ls(name = "example_dir")
       List.new.ls(name)
     end
 

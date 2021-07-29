@@ -18,17 +18,17 @@ class LearnerTest < Test::Unit::TestCase
   end
 
   sub_test_case "List" do
-    test "pwdはtest/docsへのpathを返す" do
-      assert_equal(File.join(File.expand_path("..",__FILE__),'docs'),
-                   List.new.pwd('test/docs') )
+    test "pwdはexample_dirへのpathを返す" do
+      assert_equal(File.join(File.expand_path("../..",__FILE__),'example_dir'),
+                   List.new.pwd('example_dir') )
     end
-    test "dir_globはtest/docsのfileのArrayを返す" do
-      dir = File.join(File.expand_path("..",__FILE__),'docs','*')
-      assert_equal  Dir.glob(dir) ,List.new.dir_glob('test/docs')
+    test "dir_globはexample_dirのfileのArrayを返す" do
+      dir = File.join(File.expand_path("../..",__FILE__),'example_dir','*')
+      assert_equal  Dir.glob(dir) ,List.new.dir_glob('example_dir')
     end
-    test "lsはtest/docsのfileを表示する" do
+    test "lsはexample_dirのfileを表示する" do
       assert do
-        List.new.ls('test/docs')
+        List.new.ls('example_dir')
       end
     end
   end
