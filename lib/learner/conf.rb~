@@ -1,0 +1,10 @@
+# frozen_string_literal: true
+
+module Learner
+  # puts hello
+  class Conf
+    def run()
+      p Dir.pwd
+    end
+  end
+end

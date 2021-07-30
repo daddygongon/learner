@@ -32,4 +32,16 @@ class LearnerTest < Test::Unit::TestCase
       end
     end
   end
+
+  sub_test_case "Confはpwdにある.learner.confというファイルからorigin_dirを読み込む" do
+    test "pwdが正しく返る" do
+      assert_equal(
+                   File.expand_path("../..",__FILE__),
+                   Conf.new.pwd
+                   )
+    end
+    test "check_confは.learner.confが存在するかを確認する" do
+      assert_false Conf.new.check_conf
+    end
+  end
 end
