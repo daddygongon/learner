@@ -36,7 +36,7 @@ module Learner
       File.open(@file_path, "w") do |f|
         JSON.dump(@conf, f)
       end
-      puts "edit \"TODO: change dir to origin\" in learner.conf"
+      puts "edit \"TODO: change dir to origin\" in ./.learner.conf"
     end
   end
 end
