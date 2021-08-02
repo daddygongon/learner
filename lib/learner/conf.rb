@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 require "json"
 
 module Learner
-  # puts hello
+  # configuration class
   class Conf
     def initialize(path)
       @path = path
@@ -23,16 +24,29 @@ module Learner
 
     require "pp"
 
+    def check_dir
+      raise "No file #{@file_path}" unless File.exist?(@file_path)
+
+      @conf = JSON.parse(File.read(@file_path))
+      @origin_dir = @conf["origin_dir"]
+
+      raise "Edit origin_dir in #{@file_path}." if @origin_dir.include?("TODO")
+
+      raise "No valid path in #{@file_path}." unless File.exist?(@origin_dir)
+
+      @origin_dir
+    end
+
     def load_conf
-      puts "learner configuration read from ./.learner.conf."
-      puts "If necessary, edit ./.learner.conf in JSON format."
+      puts "learner configuration read from #{@file_path}."
+      puts "If necessary, edit #{@file_path} in JSON format."
       cont = File.read(@file_path)
-      @conf = JSON.load(cont)
+      @conf = JSON.parse(cont)
       pp @conf
     end
 
-    def dump_conf
-      @conf = { "origin_dir" => "TODO: change dir to origin" }
+    def dump_conf(target_dir = "TODO: change dir to origin")
+      @conf = { "origin_dir" => target_dir }
       File.open(@file_path, "w") do |f|
         JSON.dump(@conf, f)
       end

@@ -19,8 +19,12 @@ module Learner
 
     desc "ls [NAME]", "list NAME"
 
-    def ls(name = "example_dir")
-      List.new.ls(name)
+    def ls
+      pwd = Dir.pwd
+      origin_dir = Conf.new(pwd).check_dir
+      List.new.ls(origin_dir)
+    rescue RuntimeError => e
+      puts e
     end
 
     desc "conf", "show or setup configuration"

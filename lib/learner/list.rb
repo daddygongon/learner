@@ -5,7 +5,7 @@ module Learner
   class List
     def pwd(target_dir = "example_dir")
       if target_dir == "example_dir"
-        File.join(File.expand_path("../../..", __FILE__), target_dir)
+        File.join(File.expand_path("../../", __dir__), target_dir)
       else
         target_dir
       end
