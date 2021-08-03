@@ -2,12 +2,14 @@ PATH
   remote: .
   specs:
     learner (0.1.0)
+      colorize
       thor
 
 GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    colorize (0.8.1)
     parallel (1.20.1)
     parser (3.0.2.0)
       ast (~> 2.4.1)
@@ -43,4 +45,4 @@ DEPENDENCIES
   test-unit (~> 3.0)
 
 BUNDLED WITH
-   2.2.23
+   2.2.24

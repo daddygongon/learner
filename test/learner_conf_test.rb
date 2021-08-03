@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # frozen_string_literal: true
 
 require "test_helper"
@@ -20,7 +21,7 @@ class LearnerTest < Test::Unit::TestCase
   end
 
   sub_test_case "Conf with .learner.conf" do
-    test "check_confは.learner.confが存在するかを確認する" do
+    test "check_confは.learner.confが存在することを確認する" do
       mk_example_dir(["dir1"], [".learner.conf"])
       assert_true Conf.new(@path).check_conf
     ensure
@@ -37,7 +38,7 @@ class LearnerTest < Test::Unit::TestCase
       FileUtils.rm_r(@path)
     end
 
-    test "check_confは.learner.confが存在するかを確認する" do
+    test "check_confは.learner.confが存在しないことを確認する" do
       assert_false Conf.new(@path).check_conf
     end
     test "dump_confは.learner.confにorigin_dirのdefaultを保存する" do

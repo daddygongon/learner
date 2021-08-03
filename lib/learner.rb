@@ -19,10 +19,10 @@ module Learner
 
     desc "ls [NAME]", "list NAME"
 
-    def ls
+    def ls(argv = [])
       pwd = Dir.pwd
       origin_dir = Conf.new(pwd).check_dir
-      List.new.ls(origin_dir)
+      puts List.new(origin_dir).ls(argv)
     rescue RuntimeError => e
       puts e
     end
