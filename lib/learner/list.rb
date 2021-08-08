@@ -18,21 +18,40 @@ module Learner
     end
 
     def dir_glob(target_dir = "example_dir")
-      Dir.glob(File.join(target_dir, "**/*"))
+      Dir.glob(File.join(target_dir, "**/*"), File::FNM_DOTMATCH).reject do |x|
+        x =~ /(\.|~|\.git)$/
+      end
     end
 
     def ls(target_dir = "example_dir")
-      target_dir = File.join(@root_dir, target_dir)
+      target_dir = mk_target_dir(target_dir)
       raise "#{target_dir} does not exist.".red unless File.exist?(target_dir)
 
       text = "Files and dirs in #{target_dir.green}/\n"
 
       dir_glob(target_dir).sort.each do |file|
         file_type = F_TYPE[select_file_type(file)]
-        res = file.split("/") - target_dir.split("/")
+        res = get_extend_dir_name(file, target_dir)
         text << mk_list(res, file_type)
       end
       text
+    end
+
+    def mk_target_dir(target_dir)
+      tmp = target_dir == "" ? target_dir : File.join(target_dir.split(File::SEPARATOR))
+      File.join(@root_dir, tmp)
+    end
+
+    def get_extend_dir_name(file, target_dir)
+      num = target_dir.size
+      file[num..-1].split("/")
+    end
+
+    def mk_list(res, file_type, level = 4)
+      return "" unless res.size < level
+
+      text = "    " * (res.size - 1)
+      text << "|--- #{res[-1]}#{file_type[:term]}\n".colorize(file_type[:color])
     end
 
     F_TYPE = { dir: { term: "/", color: :blue },
@@ -47,20 +66,17 @@ module Learner
       elsif File.basename(file) == "Rakefile"
         :ruby
       else
-        case File.extname(file)
-        when ".rb" then :ruby
-        when ".sh" then :sh
-        when ".org" then :org
-        else :file
-        end
+        select_color_by_ext(file)
       end
     end
 
-    def mk_list(res, file_type, level = 3)
-      return "" unless res.size < level
-
-      text = "    " * (res.size - 1)
-      text << "|---#{res[-1]}#{file_type[:term]}\n".colorize(file_type[:color])
+    def select_color_by_ext(file)
+      case File.extname(file)
+      when ".rb" then :ruby
+      when ".sh" then :sh
+      when ".org" then :org
+      else :file
+      end
     end
   end
 end

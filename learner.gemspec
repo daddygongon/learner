@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = "Learning contents management system for CLI"
   #  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 2.5.0"
+  # spec.required_ruby_version = ">= 2.5.0"
 
   #  spec.metadata["allowed_push_host"] = "TODO: Set to 'https://mygemserver.com'"
 
@@ -32,8 +32,8 @@ Gem::Specification.new do |spec|
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
 
-  spec.add_runtime_dependency("thor")
   spec.add_runtime_dependency("colorize")
+  spec.add_runtime_dependency("thor")
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html
 end

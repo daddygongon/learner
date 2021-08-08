@@ -5,6 +5,7 @@ require_relative "learner/version"
 require_relative "learner/hello"
 require_relative "learner/list"
 require_relative "learner/conf"
+require_relative "learner/push"
 
 module Learner
   class Error < StandardError; end
