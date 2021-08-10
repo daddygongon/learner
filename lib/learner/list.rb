@@ -38,8 +38,8 @@ module Learner
     end
 
     def mk_target_dir(target_dir)
-      tmp = target_dir == "" ? target_dir : File.join(target_dir.split(File::SEPARATOR))
-      File.join(@root_dir, tmp)
+      target_dir = File.join(@root_dir, target_dir)
+      File.join(target_dir.split(File::SEPARATOR))
     end
 
     def get_extend_dir_name(file, target_dir)

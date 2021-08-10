@@ -34,6 +34,8 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency("colorize")
   spec.add_runtime_dependency("thor")
+  spec.add_runtime_dependency("command_line")
+  spec.add_runtime_dependency("irb")
   # For more information and examples about making a new gem, checkout our
   # guide at: https://bundler.io/guides/creating_gem.html
 end

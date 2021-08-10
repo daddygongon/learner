@@ -1,37 +1,50 @@
+# frozen_string_literal: true
+
 require "colorize"
-require "yaml"
+require "fileutils"
+require_relative "list"
 
 module Learner
-  class Push
-    def run(target_file)
-      p target_file
-      p source_files = File.expand_path(File.join("../../finite_temp_vasp/templates/", target_file), @source_dir)
-      file = source_files
-      return if File.directory?(file)
-      target = target_file
-      puts "Pushing #{target} to templates...".green
-      ans = "Y"
-      if File.exist?(target)
-        res = command_line "diff #{target} #{file}"
-        puts_diff(res.stdout) unless res.stdout == ""
-        print "Are you sure to push #{target} [Yn]? ".red
-        ans = STDIN.gets
+  # Push file from cwd to target_dir
+  class Push < List
+    def push(cp_source)
+      FileUtils.mkdir_p(File.expand_path("..", @cp_target))
+      FileUtils.cp(cp_source, @cp_target, verbose: true)
+    end
+
+    def check_diff(cp_source)
+      @cp_target = File.join(@root_dir, cp_source)
+      puts "Checking #{cp_source} and #{@root_dir}...".green
+      if File.exist?(@cp_target)
+        show_diff(@cp_target, cp_source)
+      else
+        "#{cp_source} does not exist in #{@root_dir}"
       end
-      p ans[0]
-      FileUtils.cp(target, file, verbose: true) if ans[0] == "Y"
-      ""
+    end
+
+    def show_diff(cp_target, cp_source)
+      res = command_line "diff #{cp_target} #{cp_source}"
+      if res.stderr.red != ""
+        puts res.stderr.red
+        return
+      end
+      if res.stdout == ""
+        "No diff between #{cp_source} and #{cp_target}"
+      else
+        puts_diff(res.stdout)
+      end
     end
 
     def puts_diff(diff_text)
-      diff_text.split("\n")[0..20].each do |line|
-        if line.match(/^>/)
-          puts "there:#{line}".on_light_cyan
-        elsif line.match(/^</)
-          puts "here:#{line}".on_light_white
-        else
-          puts line
+      lines = diff_text.split("\n")
+      text = lines[0..20].collect do |line|
+        case line[0]
+        when ">" then "here:#{line}".on_light_cyan
+        when "<" then "there:#{line}".on_light_white
+        else line
         end
-      end
+      end.join("\n")
+      text + (lines.size > 20 ? "\n\n...\n\n".red : "")
     end
   end
 end

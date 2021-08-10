@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # frozen_string_literal: true
 
 require "test_helper"
@@ -19,12 +18,28 @@ class LearnerTest < Test::Unit::TestCase
       FileUtils.rm_r(@path)
     end
 
-    test "Push.pushはtest/test_sample.txtをpush" do
+    test "Push.check_diffは違うファイルを表示" do
       mk_example_dir(["test"], [])
-      target_file = "test/test_sample.txt"
-      FileUtils.cp(target_file, File.join(@path, "test"))
-      file = File.join(@path, target_file)
-      Push.push(target_file)
+      target_file1 = "test/test_sample_1.txt"
+      target_file2 = "test/test_sample_2.txt"
+      FileUtils.cp(target_file2, File.join(@path, "test/test_sample_1.txt"))
+      text = "1c1\n" \
+             "\e[0;39;107mthere:< test sample 2.\e[0m\n" \
+             "---\n" \
+             "\e[0;39;106mhere:> test sample 1.\e[0m"
+      assert_equal(text,
+                   Push.new(@path).check_diff(target_file1))
+    ensure
+      FileUtils.rm_r(@path)
+    end
+    test "Push.check_diffは同じファイルを表示" do
+      mk_example_dir(["test"], [])
+      target_file1 = "test/test_sample_1.txt"
+      target_file2 = "test/test_sample_1.txt"
+      target = File.join(@path, "test/test_sample_1.txt")
+      FileUtils.cp(target_file2, target)
+      assert_equal("No diff between #{target_file1} and #{target}",
+                   Push.new(@path).check_diff(target_file1))
     ensure
       FileUtils.rm_r(@path)
     end
