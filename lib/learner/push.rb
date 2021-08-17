@@ -14,6 +14,7 @@ module Learner
 
     def check_diff(cp_source)
       @cp_target = File.join(@root_dir, cp_source)
+      raise "push is only executable for a file. Use \'dir/*\'." if File.directory?(cp_source)
       puts "Checking #{cp_source} and #{@root_dir}...".green
       if File.exist?(@cp_target)
         show_diff(@cp_target, cp_source)

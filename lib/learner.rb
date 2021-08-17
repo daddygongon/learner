@@ -48,6 +48,8 @@ module Learner
         ans = $stdin.gets
         push.push(file) if ans[0] == "Y"
       end
+      rescue RuntimeError => e
+        puts e
     end
 
     desc "pull [DIR/FILE]", "pull DIR/FILES.each"
