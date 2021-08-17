@@ -49,7 +49,7 @@ module Learner
         push.push(file) if ans[0] == "Y"
       end
       rescue RuntimeError => e
-        puts e
+        puts e.red
     end
 
     desc "pull [DIR/FILE]", "pull DIR/FILES.each"
