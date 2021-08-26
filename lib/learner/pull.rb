@@ -17,7 +17,7 @@ module Learner
       end
     end
 
-    def pull(file)
+    def run(file)
       @cp_source = File.join(@root_dir, file)
       @cp_target = File.join(Dir.pwd, file)
       FileUtils.mkdir_p(File.expand_path("..", @cp_target))

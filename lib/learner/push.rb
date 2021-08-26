@@ -7,7 +7,7 @@ require_relative "list"
 module Learner
   # Push file from cwd to target_dir
   class Push < List
-    def push(cp_source)
+    def run(cp_source)
       FileUtils.mkdir_p(File.expand_path("..", @cp_target))
       FileUtils.cp(cp_source, @cp_target, verbose: true)
     end
