@@ -40,9 +40,9 @@ module Learner
     desc "push [FILES]", "push FILES.each"
 
     def push(*files)
-      target_dir = Conf.new(Dir.pwd).check_dir
-      push = Push.new(target_dir)
-      files.each do |file|
+      push = Push.new(Conf.new(Dir.pwd).check_dir)
+      target_files = Dir.glob(files) || files
+      target_files.flatten.each do |file|
         puts push.check_diff(file)
         print "Are you sure to push #{file} [Yn]? ".red
         ans = $stdin.gets
