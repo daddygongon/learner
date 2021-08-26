@@ -48,16 +48,16 @@ module Learner
         ans = $stdin.gets
         push.push(file) if ans[0] == "Y"
       end
-      rescue RuntimeError => e
-        puts e.red
+    rescue RuntimeError => e
+      puts e.red
     end
 
     desc "pull [DIR/FILE]", "pull DIR/FILES.each"
 
     def pull(*files)
-      target_dir = Conf.new(Dir.pwd).check_dir
-      pull = Pull.new(target_dir)
-      pull.dir_glob(files).each do |file|
+      pull = Pull.new(Conf.new(Dir.pwd).check_dir)
+      target_files = Dir.glob(files) || files
+      target_files.flatten.each do |file|
         next if File.directory?(file)
 
         puts pull.check_diff(file)
