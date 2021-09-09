@@ -45,8 +45,7 @@ module Learner
       target_files.flatten.each do |file|
         puts push.check_diff(file)
         print "Are you sure to push #{file} [Yn]? ".red
-        ans = $stdin.gets
-        push.push(file) if ans[0] == "Y"
+        push.push(file) if $stdin.gets[0] == "Y"
       end
     end
 
@@ -54,14 +53,12 @@ module Learner
 
     def pull(*files)
       pull = Pull.new(Conf.new(Dir.pwd).check_dir)
-      target_files = Dir.glob(files) || files
-      target_files.flatten.each do |file|
+      Dir.glob(files).each do |file|
         next if File.directory?(file)
 
         puts pull.check_diff(file)
         print "Are you sure to pull #{file} [Yn]? ".red
-        ans = $stdin.gets
-        pull.pull(file) if ans[0] == "Y"
+        pull.pull(file) if $stdin.gets[0] == "Y"
       end
     end
   end
