@@ -27,5 +27,14 @@ class LearnerTest < Test::Unit::TestCase
     ensure
       FileUtils.rm_r(@path)
     end
+
+    test "Pull.remove_root_dir_pathはfile, root_dirをよしなに変形(not yet)" do
+    end
+
+    test "Pull.pullはp_dirがないと作る(not yet)" do
+    end
+
+    test "Pull.pullはsourceをtargetにcopy(not yet)" do
+    end
   end
 end

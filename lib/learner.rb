@@ -53,8 +53,9 @@ module Learner
 
     def pull(*files)
       pull = Pull.new(Conf.new(Dir.pwd).check_dir)
-      Dir.glob(files).each do |file|
-        next if File.directory?(file)
+      target_files = pull.dir_glob(files)
+      target_files.each do |file|
+        next if file.nil?
 
         puts pull.check_diff(file)
         print "Are you sure to pull #{file} [Yn]? ".red
